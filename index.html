@@ -272,7 +272,7 @@ competitions:[
   }
 ],
  matches:[
-  {id:'m1',date:'2026-10-25',round:'Campeonato Amador · FINAL',home:'LD2 (3)',away:'(4)Santanense 🟢',hs:1,as:1}
+  {id:'m1',date:'2026-10-25',round:'Campeonato Amador · FINAL',home:'LD2',away:'Santanense 🟢',hs:1,as:1,penHome:3,penAway:4
  ],
   upcomingMatches:[],
   highlights:[],
@@ -371,11 +371,18 @@ function compCard(c){
  </article>`;
 }
 function matchHTML(m){
- const penaltyWinner = m.id === 'm1' ? 'away' : '';
+ const hasPenalties = m.penHome != null && m.penAway != null;
+ const penaltyWinner = hasPenalties
+   ? (m.penHome > m.penAway ? 'home' : 'away')
+   : '';
+
  return `<div class="match">
  <div class="match-date">${dateBR(m.date)}<small>${escapeHTML(m.round||'Partida')}</small></div>
- <div class="team">${escapeHTML(m.home)}</div>
- <div class="score">${m.hs} : ${m.as}</div>
+ <div class="team ${penaltyWinner === 'home' ? 'penalty-winner' : ''}">${escapeHTML(m.home)}</div>
+ <div class="score">
+   ${m.hs} : ${m.as}
+   ${hasPenalties ? `<small style="display:block;font-size:11px;font-weight:500;margin-top:4px;color:#777">Pênaltis (${m.penHome} × ${m.penAway})</small>` : ''}
+ </div>
  <div class="team right ${penaltyWinner === 'away' ? 'penalty-winner' : ''}">${escapeHTML(m.away)}</div>
  <div class="match-date" style="text-align:right">Finalizado</div>
  </div>`;
