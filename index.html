@@ -204,8 +204,41 @@ Hoje, sob uma gestão comprometida com a transparência, a modernização admini
   <button class="btn secondary" onclick="logoutAdmin()">Sair</button>
 </div></div><div class="admin-stats"><div class="admin-stat"><span>Competições</span><strong id="statComp">0</strong></div><div class="admin-stat"><span>Clubes cadastrados</span><strong id="statClubs">0</strong></div><div class="admin-stat"><span>Notícias publicadas</span><strong id="statNews">0</strong></div></div><div class="admin-box"><h3>Comece por aqui</h3><p class="muted" style="font-size:11px;line-height:1.8">Cadastre as competições oficiais, adicione os clubes participantes e atualize os resultados. As alterações aparecem nas páginas públicas automaticamente.</p><div class="form-actions"><button class="btn" onclick="adminTab('comp')">Cadastrar competição</button><button class="btn secondary" onclick="adminTab('matches')">Adicionar resultado</button></div></div></div>
   <div class="admin-panel" id="admin-comp"><div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Competições</h2></div></div><div class="admin-box"><h3 id="compFormTitle">Nova competição</h3><form id="compForm"><input type="hidden" id="compId"><div class="form-grid"><div class="field"><label>Nome da competição</label><input id="compName" required placeholder="Ex.: Campeonato Municipal"></div><div class="field"><label>Categoria</label><input id="compCategory" placeholder="Ex.: Adulto / Sub-17"></div><div class="field"><label>Temporada</label><input id="compSeason" placeholder="Ex.: 2026"></div><div class="field"><label>Status</label><select id="compStatus"><option>Em andamento</option><option>Em breve</option><option>Encerrada</option></select></div><div class="field full"><label>Descrição</label><textarea id="compDesc" placeholder="Informações sobre a competição"></textarea></div></div><div class="form-actions"><button class="btn" type="submit">Salvar competição</button><button class="btn secondary" type="button" onclick="resetComp()">Limpar</button></div></form></div><div class="admin-box"><h3>Competições cadastradas</h3><div class="data-list" id="adminCompList"></div></div></div>
-  <div class="admin-panel" id="admin-matches"><div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Resultados</h2></div></div><div class="admin-box"><h3 id="matchFormTitle">Novo resultado</h3><form id="matchForm"><input type="hidden" id="matchId"><div class="form-grid"><div class="field"><label>Data</label><input id="matchDate" type="date" required></div><div class="field"><label>Competição / Rodada</label><input id="matchRound" placeholder="Ex.: Municipal · Rodada 1"></div><div class="field"><label>Time mandante</label><input id="homeTeam" required></div><div class="field"><label>Time visitante</label><input id="awayTeam" required></div><div class="field"><label>Gols mandante</label><input id="homeScore" type="number" min="0" required></div><div class="field"><label>Gols visitante</label><input id="awayScore" type="number" min="0" required></div></div><div class="form-actions"><button class="btn" type="submit">Salvar resultado</button><button class="btn secondary" type="button" onclick="resetMatch()">Limpar</button></div></form></div><div class="admin-box"><h3>Resultados cadastrados</h3><div class="data-list" id="adminMatchList"></div></div></div>
-  <div class="admin-panel" id="admin-clubs"><div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Clubes</h2></div></div><div class="admin-box"><h3 id="clubFormTitle">Novo clube</h3><form id="clubForm"><input type="hidden" id="clubId"><div class="form-grid"><div class="field"><label>Nome do clube</label><input id="clubName" required placeholder="Nome oficial"></div><div class="field"><label>Cidade / Bairro</label><input id="clubLocation" placeholder="Localização"></div></div><div class="form-actions"><button class="btn" type="submit">Salvar clube</button><button class="btn secondary" type="button" onclick="resetClub()">Limpar</button></div></form></div><div class="admin-box"><h3>Clubes cadastrados</h3><div class="data-list" id="adminClubList"></div></div></div>
+<div class="admin-panel" id="admin-matches">
+<div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Resultados</h2></div></div>
+
+<div class="admin-box">
+<h3 id="matchFormTitle">Novo resultado</h3>
+
+<form id="matchForm">
+<input type="hidden" id="matchId">
+
+<div class="form-grid">
+<div class="field"><label>Data</label><input id="matchDate" type="date" required></div>
+<div class="field"><label>Competição / Rodada</label><input id="matchRound" placeholder="Ex.: Municipal · Rodada 1"></div>
+
+<div class="field"><label>Time mandante</label><input id="homeTeam" required></div>
+<div class="field"><label>Time visitante</label><input id="awayTeam" required></div>
+
+<div class="field"><label>Gols mandante</label><input id="homeScore" type="number" min="0" required></div>
+<div class="field"><label>Gols visitante</label><input id="awayScore" type="number" min="0" required></div>
+
+<div class="field"><label>Pênaltis – Mandante</label><input id="penaltyHome" type="number" min="0" placeholder="Opcional"></div>
+<div class="field"><label>Pênaltis – Visitante</label><input id="penaltyAway" type="number" min="0" placeholder="Opcional"></div>
+</div>
+
+<div class="form-actions">
+<button class="btn" type="submit">Salvar resultado</button>
+<button class="btn secondary" type="button" onclick="resetMatch()">Limpar</button>
+</div>
+</form>
+</div>
+
+<div class="admin-box">
+<h3>Resultados cadastrados</h3>
+<div class="data-list" id="adminMatchList"></div>
+</div>
+</div>  <div class="admin-panel" id="admin-clubs"><div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Clubes</h2></div></div><div class="admin-box"><h3 id="clubFormTitle">Novo clube</h3><form id="clubForm"><input type="hidden" id="clubId"><div class="form-grid"><div class="field"><label>Nome do clube</label><input id="clubName" required placeholder="Nome oficial"></div><div class="field"><label>Cidade / Bairro</label><input id="clubLocation" placeholder="Localização"></div></div><div class="form-actions"><button class="btn" type="submit">Salvar clube</button><button class="btn secondary" type="button" onclick="resetClub()">Limpar</button></div></form></div><div class="admin-box"><h3>Clubes cadastrados</h3><div class="data-list" id="adminClubList"></div></div></div>
   <div class="admin-panel" id="admin-news"><div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Notícias</h2></div></div><div class="admin-box"><h3 id="newsFormTitle">Nova notícia</h3><form id="newsForm"><input type="hidden" id="newsId"><div class="form-grid"><div class="field"><label>Título</label><input id="newsTitle" required></div><div class="field"><label>Data</label><input id="newsDate" type="date" required></div><div class="field full"><label>URL da imagem (opcional)</label><input id="newsImage" type="url" placeholder="https://..."></div><div class="field full"><label>Resumo / conteúdo</label><textarea id="newsDesc" required></textarea></div></div><div class="form-actions"><button class="btn" type="submit">Publicar notícia</button><button class="btn secondary" type="button" onclick="resetNews()">Limpar</button></div></form></div><div class="admin-box"><h3>Notícias cadastradas</h3><div class="data-list" id="adminNewsList"></div></div></div>
   <div class="admin-panel" id="admin-settings"><div class="admin-head"><div><div class="eyebrow">Manutenção</div><h2>Dados e backup</h2></div></div><div class="admin-box"><h3>Exportar dados</h3><p class="muted" style="font-size:11px">Baixe uma cópia JSON dos cadastros deste navegador.</p><button class="btn" onclick="exportData()"><i class="fa-solid fa-download"></i> Exportar backup</button></div><div class="admin-box"><h3>Importar backup</h3><p class="muted" style="font-size:11px">Restaure um arquivo JSON exportado anteriormente. Isso substituirá os dados atuais.</p><input type="file" id="importFile" accept=".json,application/json"><div class="form-actions"><button class="btn secondary" onclick="importData()">Importar arquivo</button></div></div><div class="admin-box"><h3>Restaurar dados de demonstração</h3><p class="muted" style="font-size:11px">Apaga os dados locais atuais e recria os exemplos iniciais.</p><button class="btn dark" onclick="resetDemo()">Restaurar demonstração</button></div></div>
  </div></div></div>
@@ -465,9 +498,57 @@ function removeItem(type,id){if(!confirm('Deseja realmente excluir este cadastro
 function resetComp(){compForm.reset();compId.value='';compFormTitle.textContent='Nova competição'}
 document.getElementById('compForm').addEventListener('submit',e=>{e.preventDefault();const id=compId.value||uid(),item={id,name:compName.value.trim(),category:compCategory.value.trim(),season:compSeason.value.trim(),status:compStatus.value,desc:compDesc.value.trim()};const i=data.competitions.findIndex(x=>x.id===id);if(i>=0)data.competitions[i]=item;else data.competitions.unshift(item);saveData();resetComp();toast('Competição salva com sucesso.')});
 function editComp(id){const c=data.competitions.find(x=>x.id===id);if(!c)return;adminTab('comp');compId.value=c.id;compName.value=c.name;compCategory.value=c.category;compSeason.value=c.season;compStatus.value=c.status;compDesc.value=c.desc;compFormTitle.textContent='Editar competição';document.getElementById('compForm').scrollIntoView({behavior:'smooth'})}
-function resetMatch(){matchForm.reset();matchId.value='';matchFormTitle.textContent='Novo resultado'}
-document.getElementById('matchForm').addEventListener('submit',e=>{e.preventDefault();const id=matchId.value||uid(),item={id,date:matchDate.value,round:matchRound.value.trim(),home:homeTeam.value.trim(),away:awayTeam.value.trim(),hs:Number(homeScore.value),as:Number(awayScore.value)};const i=data.matches.findIndex(x=>x.id===id);if(i>=0)data.matches[i]=item;else data.matches.unshift(item);saveData();resetMatch();toast('Resultado salvo com sucesso.')});
-function editMatch(id){const m=data.matches.find(x=>x.id===id);if(!m)return;adminTab('matches');matchId.value=m.id;matchDate.value=m.date;matchRound.value=m.round;homeTeam.value=m.home;awayTeam.value=m.away;homeScore.value=m.hs;awayScore.value=m.as;matchFormTitle.textContent='Editar resultado';document.getElementById('matchForm').scrollIntoView({behavior:'smooth'})}
+function resetMatch(){
+ matchForm.reset();
+ matchId.value='';
+ matchFormTitle.textContent='Novo resultado';
+}
+
+document.getElementById('matchForm').addEventListener('submit',e=>{
+ e.preventDefault();
+
+ const id=matchId.value||uid();
+ const penHomeValue=penaltyHome.value;
+ const penAwayValue=penaltyAway.value;
+
+ const item={
+  id,
+  date:matchDate.value,
+  round:matchRound.value.trim(),
+  home:homeTeam.value.trim(),
+  away:awayTeam.value.trim(),
+  hs:Number(homeScore.value),
+  as:Number(awayScore.value),
+  penHome:penHomeValue!=='' && penAwayValue!=='' ? Number(penHomeValue) : null,
+  penAway:penHomeValue!=='' && penAwayValue!=='' ? Number(penAwayValue) : null
+ };
+
+ const i=data.matches.findIndex(x=>x.id===id);
+ if(i>=0)data.matches[i]=item;
+ else data.matches.unshift(item);
+
+ saveData();
+ resetMatch();
+ toast('Resultado salvo com sucesso.');
+});
+function editMatch(id){
+ const m=data.matches.find(x=>x.id===id);
+ if(!m)return;
+
+ adminTab('matches');
+ matchId.value=m.id;
+ matchDate.value=m.date;
+ matchRound.value=m.round;
+ homeTeam.value=m.home;
+ awayTeam.value=m.away;
+ homeScore.value=m.hs;
+ awayScore.value=m.as;
+ penaltyHome.value=m.penHome ?? '';
+ penaltyAway.value=m.penAway ?? '';
+
+ matchFormTitle.textContent='Editar resultado';
+ document.getElementById('matchForm').scrollIntoView({behavior:'smooth'});
+}
 function resetClub(){clubForm.reset();clubId.value='';clubFormTitle.textContent='Novo clube'}
 document.getElementById('clubForm').addEventListener('submit',e=>{e.preventDefault();const id=clubId.value||uid(),item={id,name:clubName.value.trim(),location:clubLocation.value.trim()};const i=data.clubs.findIndex(x=>x.id===id);if(i>=0)data.clubs[i]=item;else data.clubs.push(item);saveData();resetClub();toast('Clube salvo com sucesso.')});
 function editClub(id){const c=data.clubs.find(x=>x.id===id);if(!c)return;adminTab('clubs');clubId.value=c.id;clubName.value=c.name;clubLocation.value=c.location;clubFormTitle.textContent='Editar clube';document.getElementById('clubForm').scrollIntoView({behavior:'smooth'})}
