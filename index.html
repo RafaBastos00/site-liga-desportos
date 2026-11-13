@@ -580,10 +580,18 @@ function adminTab(id){document.querySelectorAll('.admin-tab').forEach(b=>b.class
 document.querySelectorAll('.admin-tab').forEach(b=>b.addEventListener('click',()=>adminTab(b.dataset.admin)));
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
 function renderAdmin(){
- document.getElementById('statComp').textContent=data.competitions.length;document.getElementById('statClubs').textContent=data.clubs.length;document.getElementById('statNews').textContent=data.news.length;
- document.getElementById('adminCompList').innerHTML=data.competitions.map(c=>`<div class="data-row"><div><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.category)} · ${escapeHTML(c.season)} · ${escapeHTML(c.status)}</small></div><div class="row-actions"><button class="icon-btn" onclick="editComp('${c.id}')"><i class="fa-solid fa-pen"></i></button><button class="icon-btn delete" onclick="removeItem('competitions','${c.id}')"><i class="fa-solid fa-trash"></i></button></div></div>`).join('')||'<div class="empty">Nenhuma competição.</div>';
+ document.getElementById('statComp').textContent=data.competitions.length;
+ document.getElementById('statClubs').textContent=data.clubs.length;
+ document.getElementById('statNews').textContent=data.news.length;
+
+ if(document.getElementById('adminCompList')){
+  document.getElementById('adminCompList').innerHTML=data.competitions.map(c=>`<div class="data-row"><div><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.category)} · ${escapeHTML(c.season)} · ${escapeHTML(c.status)}</small></div><div class="row-actions"><button class="icon-btn" onclick="editComp('${c.id}')"><i class="fa-solid fa-pen"></i></button><button class="icon-btn delete" onclick="removeItem('competitions','${c.id}')"><i class="fa-solid fa-trash"></i></button></div></div>`).join('')||'<div class="empty">Nenhuma competição.</div>';
+ }
+
  document.getElementById('adminMatchList').innerHTML=data.matches.map(m=>`<div class="data-row"><div><strong>${escapeHTML(m.home)} ${m.hs} × ${m.as} ${escapeHTML(m.away)}</strong><small>${dateBR(m.date)} · ${escapeHTML(m.round)}</small></div><div class="row-actions"><button class="icon-btn" onclick="editMatch('${m.id}')"><i class="fa-solid fa-pen"></i></button><button class="icon-btn delete" onclick="removeItem('matches','${m.id}')"><i class="fa-solid fa-trash"></i></button></div></div>`).join('')||'<div class="empty">Nenhum resultado.</div>';
+
  document.getElementById('adminClubList').innerHTML=data.clubs.map(c=>`<div class="data-row"><div><strong>${escapeHTML(c.name)}</strong><small>${escapeHTML(c.location)}</small></div><div class="row-actions"><button class="icon-btn" onclick="editClub('${c.id}')"><i class="fa-solid fa-pen"></i></button><button class="icon-btn delete" onclick="removeItem('clubs','${c.id}')"><i class="fa-solid fa-trash"></i></button></div></div>`).join('')||'<div class="empty">Nenhum clube.</div>';
+
  document.getElementById('adminNewsList').innerHTML=data.news.map(n=>`<div class="data-row"><div><strong>${escapeHTML(n.title)}</strong><small>${dateBR(n.date)}</small></div><div class="row-actions"><button class="icon-btn" onclick="editNews('${n.id}')"><i class="fa-solid fa-pen"></i></button><button class="icon-btn delete" onclick="removeItem('news','${n.id}')"><i class="fa-solid fa-trash"></i></button></div></div>`).join('')||'<div class="empty">Nenhuma notícia.</div>';
 }
 async function loginAdmin(event){
@@ -625,7 +633,7 @@ supabaseClient.auth.getSession().then(({data:{session}})=>{
 function uid(){return 'id'+Date.now()+Math.random().toString(16).slice(2,6)}
 function removeItem(type,id){if(!confirm('Deseja realmente excluir este cadastro?'))return;data[type]=data[type].filter(x=>x.id!==id);saveData();toast('Cadastro excluído.')}
 function resetComp(){compForm.reset();compId.value='';compFormTitle.textContent='Nova competição'}
-document.getElementById('compForm').addEventListener('submit',e=>{
+document.getElementById('compForm')?.addEventListener('submit',e=>{
  e.preventDefault();
 
  const id=compId.value||uid();
