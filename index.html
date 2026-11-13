@@ -416,6 +416,8 @@ if(!result.content || Object.keys(result.content).length === 0){
 } else {
   data = {...structuredClone(demo), ...result.content};
   }
+console.log('Conteúdo salvo no banco:', result.content);
+console.log('Resultados salvos:', result.content.matches);
 
   renderAll();
 }
