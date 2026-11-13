@@ -84,6 +84,32 @@ footer{background:#241719;color:white;margin-top:65px;padding:45px 0 20px}.foote
  <div class="page-banner"><div class="container"><div class="eyebrow">Calendário esportivo</div><h1>Competições</h1><p>Acompanhe os campeonatos, categorias e torneios promovidos pela Liga de Desportos de Conselheiro Lafaiete.</p></div></div>
  <div class="container section-pad"><div class="filter-row"><button class="filter active" data-filter="Todas">Todas</button><button class="filter" data-filter="Em andamento">Em andamento</button><button class="filter" data-filter="Em breve">Em breve</button><button class="filter" data-filter="Encerrada">Encerradas</button></div><div class="cards" id="competitionList"></div></div>
 </section>
+<section class="page" id="detalheCompeticao">
+ <div class="page-banner">
+  <div class="container">
+   <button class="btn secondary" onclick="showPage('competicoes')">
+    <i class="fa-solid fa-arrow-left"></i> Voltar às competições
+   </button>
+   <div class="eyebrow" id="detailCategory">Competição</div>
+   <h1 id="detailName">Nome da competição</h1>
+   <p id="detailDesc">Informações da competição.</p>
+  </div>
+ </div>
+
+ <div class="container section-pad">
+  <div class="admin-box">
+   <h2>Sobre a competição</h2>
+   <p id="detailFullDesc"></p>
+
+   <div class="form-actions">
+    <a id="detailLink" class="btn" href="#" target="_blank" rel="noopener" style="display:none">
+     Acompanhar no Copa Fácil
+     <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    </a>
+   </div>
+  </div>
+ </div>
+</section>  
 <section class="page" id="resultados">
  <div class="page-banner">
   <div class="container">
@@ -203,7 +229,25 @@ Hoje, sob uma gestão comprometida com a transparência, a modernização admini
   <button class="btn" onclick="showPage('inicio')">Visualizar site</button>
   <button class="btn secondary" onclick="logoutAdmin()">Sair</button>
 </div></div><div class="admin-stats"><div class="admin-stat"><span>Competições</span><strong id="statComp">0</strong></div><div class="admin-stat"><span>Clubes cadastrados</span><strong id="statClubs">0</strong></div><div class="admin-stat"><span>Notícias publicadas</span><strong id="statNews">0</strong></div></div><div class="admin-box"><h3>Comece por aqui</h3><p class="muted" style="font-size:11px;line-height:1.8">Cadastre as competições oficiais, adicione os clubes participantes e atualize os resultados. As alterações aparecem nas páginas públicas automaticamente.</p><div class="form-actions"><button class="btn" onclick="adminTab('comp')">Cadastrar competição</button><button class="btn secondary" onclick="adminTab('matches')">Adicionar resultado</button></div></div></div>
-  <div class="admin-panel" id="admin-comp"><div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Competições</h2></div></div><div class="admin-box"><h3 id="compFormTitle">Nova competição</h3><form id="compForm"><input type="hidden" id="compId"><div class="form-grid"><div class="field"><label>Nome da competição</label><input id="compName" required placeholder="Ex.: Campeonato Municipal"></div><div class="field"><label>Categoria</label><input id="compCategory" placeholder="Ex.: Adulto / Sub-17"></div><div class="field"><label>Temporada</label><input id="compSeason" placeholder="Ex.: 2026"></div><div class="field"><label>Status</label><select id="compStatus"><option>Em andamento</option><option>Em breve</option><option>Encerrada</option></select></div><div class="field full"><label>Descrição</label><textarea id="compDesc" placeholder="Informações sobre a competição"></textarea></div></div><div class="form-actions"><button class="btn" type="submit">Salvar competição</button><button class="btn secondary" type="button" onclick="resetComp()">Limpar</button></div></form></div><div class="admin-box"><h3>Competições cadastradas</h3><div class="data-list" id="adminCompList"></div></div></div>
+<div class="field full">
+<label>Descrição resumida</label>
+<textarea id="compDesc" placeholder="Breve apresentação da competição"></textarea>
+</div>
+
+<div class="field full">
+<label>Descrição completa</label>
+<textarea id="compFullDesc" placeholder="Apresentação detalhada da competição"></textarea>
+</div>
+
+<div class="field full">
+<label>Link da competição no Copa Fácil</label>
+<input id="compLink" type="url" placeholder="https://...">
+</div>
+
+<div class="field full">
+<label>Imagem de capa (URL)</label>
+<input id="compImage" type="url" placeholder="https://...">
+</div>
 <div class="admin-panel" id="admin-matches">
 <div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Resultados</h2></div></div>
 
@@ -398,6 +442,7 @@ document.getElementById('menuToggle').addEventListener('click',()=>document.getE
 function dateBR(d){if(!d)return 'Data a definir';const [y,m,day]=d.split('-');return `${day}/${m}/${y}`}
 function compCard(c){
  const img = c.image || 'https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=900&q=80';
+
  return `<article class="card">
  <div class="card-image">
  <img src="${escapeHTML(img)}" alt="Imagem da competição" onerror="this.src='https://images.unsplash.com/photo-1459865264687-595d652de67e?auto=format&fit=crop&w=900&q=80'">
@@ -405,13 +450,37 @@ function compCard(c){
  <div class="card-body">
  <div class="card-top">
  <span class="tag">${escapeHTML(c.category||'Competição')}</span>
- <span class="tag gold">${escapeHTML(c.status)}</span>
+ <span class="tag gold">${escapeHTML(c.status||'')}</span>
  </div>
  <h3>${escapeHTML(c.name)}</h3>
  <p>${escapeHTML(c.desc||'Informações da competição.')}</p>
- <div class="card-link">${escapeHTML(c.season||'')} · Saiba mais <i class="fa-solid fa-arrow-right"></i></div>
+ <button type="button" class="card-link" onclick="openComp('${c.id}')">
+ ${escapeHTML(c.season||'')} · Saiba mais
+ <i class="fa-solid fa-arrow-right"></i>
+ </button>
  </div>
  </article>`;
+}
+function openComp(id){
+ const c=data.competitions.find(x=>x.id===id);
+ if(!c)return;
+
+ document.getElementById('detailCategory').textContent=c.category||'Competição';
+ document.getElementById('detailName').textContent=c.name||'';
+ document.getElementById('detailDesc').textContent=c.desc||'';
+ document.getElementById('detailFullDesc').textContent=c.fullDesc||c.desc||'';
+
+ const link=document.getElementById('detailLink');
+
+ if(c.link){
+  link.href=c.link;
+  link.style.display='inline-flex';
+ }else{
+  link.style.display='none';
+  link.removeAttribute('href');
+ }
+
+ showPage('detalheCompeticao');
 }
 function matchHTML(m){
  const hasPenalties = m.penHome != null && m.penAway != null;
@@ -496,8 +565,52 @@ supabaseClient.auth.getSession().then(({data:{session}})=>{
 function uid(){return 'id'+Date.now()+Math.random().toString(16).slice(2,6)}
 function removeItem(type,id){if(!confirm('Deseja realmente excluir este cadastro?'))return;data[type]=data[type].filter(x=>x.id!==id);saveData();toast('Cadastro excluído.')}
 function resetComp(){compForm.reset();compId.value='';compFormTitle.textContent='Nova competição'}
-document.getElementById('compForm').addEventListener('submit',e=>{e.preventDefault();const id=compId.value||uid(),item={id,name:compName.value.trim(),category:compCategory.value.trim(),season:compSeason.value.trim(),status:compStatus.value,desc:compDesc.value.trim()};const i=data.competitions.findIndex(x=>x.id===id);if(i>=0)data.competitions[i]=item;else data.competitions.unshift(item);saveData();resetComp();toast('Competição salva com sucesso.')});
-function editComp(id){const c=data.competitions.find(x=>x.id===id);if(!c)return;adminTab('comp');compId.value=c.id;compName.value=c.name;compCategory.value=c.category;compSeason.value=c.season;compStatus.value=c.status;compDesc.value=c.desc;compFormTitle.textContent='Editar competição';document.getElementById('compForm').scrollIntoView({behavior:'smooth'})}
+document.getElementById('compForm').addEventListener('submit',e=>{
+ e.preventDefault();
+
+ const id=compId.value||uid();
+
+ const item={
+  id,
+  name:compName.value.trim(),
+  category:compCategory.value.trim(),
+  season:compSeason.value.trim(),
+  status:compStatus.value,
+  desc:compDesc.value.trim(),
+  fullDesc:compFullDesc.value.trim(),
+  link:compLink.value.trim(),
+  image:compImage.value.trim()
+ };
+
+ const i=data.competitions.findIndex(x=>x.id===id);
+
+ if(i>=0)data.competitions[i]={...data.competitions[i],...item};
+ else data.competitions.unshift(item);
+
+ saveData();
+ resetComp();
+ toast('Competição salva com sucesso.');
+});
+function editComp(id){
+ const c=data.competitions.find(x=>x.id===id);
+ if(!c)return;
+
+ adminTab('comp');
+
+ compId.value=c.id;
+ compName.value=c.name||'';
+ compCategory.value=c.category||'';
+ compSeason.value=c.season||'';
+ compStatus.value=c.status||'Em breve';
+ compDesc.value=c.desc||'';
+ compFullDesc.value=c.fullDesc||'';
+ compLink.value=c.link||'';
+ compImage.value=c.image||'';
+
+ compFormTitle.textContent='Editar competição';
+
+ document.getElementById('compForm').scrollIntoView({behavior:'smooth'});
+}
 function resetMatch(){
  matchForm.reset();
  matchId.value='';
