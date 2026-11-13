@@ -229,24 +229,82 @@ Hoje, sob uma gestão comprometida com a transparência, a modernização admini
   <button class="btn" onclick="showPage('inicio')">Visualizar site</button>
   <button class="btn secondary" onclick="logoutAdmin()">Sair</button>
 </div></div><div class="admin-stats"><div class="admin-stat"><span>Competições</span><strong id="statComp">0</strong></div><div class="admin-stat"><span>Clubes cadastrados</span><strong id="statClubs">0</strong></div><div class="admin-stat"><span>Notícias publicadas</span><strong id="statNews">0</strong></div></div><div class="admin-box"><h3>Comece por aqui</h3><p class="muted" style="font-size:11px;line-height:1.8">Cadastre as competições oficiais, adicione os clubes participantes e atualize os resultados. As alterações aparecem nas páginas públicas automaticamente.</p><div class="form-actions"><button class="btn" onclick="adminTab('comp')">Cadastrar competição</button><button class="btn secondary" onclick="adminTab('matches')">Adicionar resultado</button></div></div></div>
-<div class="field full">
-<label>Descrição resumida</label>
-<textarea id="compDesc" placeholder="Breve apresentação da competição"></textarea>
-</div>
+<div class="admin-panel" id="admin-comp">
 
-<div class="field full">
-<label>Descrição completa</label>
-<textarea id="compFullDesc" placeholder="Apresentação detalhada da competição"></textarea>
-</div>
+ <div class="admin-head">
+  <div>
+   <div class="eyebrow">Gerenciar</div>
+   <h2>Competições</h2>
+  </div>
+ </div>
 
-<div class="field full">
-<label>Link da competição no Copa Fácil</label>
-<input id="compLink" type="url" placeholder="https://...">
-</div>
+ <div class="admin-box">
+  <h3 id="compFormTitle">Nova competição</h3>
 
-<div class="field full">
-<label>Imagem de capa (URL)</label>
-<input id="compImage" type="url" placeholder="https://...">
+  <form id="compForm">
+   <input type="hidden" id="compId">
+
+   <div class="form-grid">
+
+    <div class="field">
+     <label>Nome da competição</label>
+     <input id="compName" required placeholder="Nome da competição">
+    </div>
+
+    <div class="field">
+     <label>Categoria / Modalidade</label>
+     <input id="compCategory" required placeholder="Ex.: Futebol">
+    </div>
+
+    <div class="field">
+     <label>Temporada</label>
+     <input id="compSeason" placeholder="Ex.: 2026">
+    </div>
+
+    <div class="field">
+     <label>Status</label>
+     <select id="compStatus">
+      <option value="Em breve">Em breve</option>
+      <option value="Em andamento">Em andamento</option>
+      <option value="Encerrada">Encerrada</option>
+     </select>
+    </div>
+
+    <div class="field full">
+     <label>Descrição resumida</label>
+     <textarea id="compDesc" placeholder="Breve apresentação da competição"></textarea>
+    </div>
+
+    <div class="field full">
+     <label>Descrição completa</label>
+     <textarea id="compFullDesc" placeholder="Apresentação detalhada da competição"></textarea>
+    </div>
+
+    <div class="field full">
+     <label>Link da competição no Copa Fácil</label>
+     <input id="compLink" type="url" placeholder="https://...">
+    </div>
+
+    <div class="field full">
+     <label>Imagem de capa (URL)</label>
+     <input id="compImage" type="url" placeholder="https://...">
+    </div>
+
+   </div>
+
+   <div class="form-actions">
+    <button class="btn" type="submit">Salvar competição</button>
+    <button class="btn secondary" type="button" onclick="resetComp()">Limpar</button>
+   </div>
+
+  </form>
+ </div>
+
+ <div class="admin-box">
+  <h3>Competições cadastradas</h3>
+  <div class="data-list" id="adminCompList"></div>
+ </div>
+
 </div>
 <div class="admin-panel" id="admin-matches">
 <div class="admin-head"><div><div class="eyebrow">Gerenciar</div><h2>Resultados</h2></div></div>
