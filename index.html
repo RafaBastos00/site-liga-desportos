@@ -36,7 +36,159 @@ main{min-height:70vh}.page{display:none;animation:fade .35s ease}.page.active{di
   transform:translateY(0);
 }
 
-.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:-36px;position:relative}.quick-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px;box-shadow:var(--shadow);display:flex;gap:15px;align-items:center}.quick-icon{width:43px;height:43px;flex:0 0 43px;border-radius:12px;background:var(--soft);display:grid;place-items:center;color:var(--primary);font-size:17px}.quick-card strong{font-size:13px;display:block}.quick-card span{font-size:11px;color:var(--muted);display:block;margin-top:5px}
+
+.home-carousel{
+  position:relative;
+  width:100%;
+  margin:35px auto 45px;
+  overflow:hidden;
+  border-radius:18px;
+  background:#101820;
+  box-shadow:0 15px 40px rgba(0,0,0,.14);
+}
+
+.carousel-track{
+  position:relative;
+  width:100%;
+  min-height:390px;
+}
+
+.carousel-slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  min-height:390px;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity .7s ease, visibility .7s ease;
+}
+
+.carousel-slide.active{
+  position:relative;
+  opacity:1;
+  visibility:visible;
+}
+
+.carousel-slide img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.carousel-slide::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(8,15,22,.94) 0%,rgba(8,15,22,.78) 48%,rgba(8,15,22,.12) 100%);
+}
+
+.carousel-content{
+  position:relative;
+  z-index:2;
+  max-width:650px;
+  padding:65px 60px 85px;
+  color:#fff;
+}
+
+.carousel-content span{
+  display:inline-block;
+  color:#e63b4b;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:18px;
+}
+
+.carousel-content h2{
+  font-size:clamp(28px,4vw,46px);
+  line-height:1.12;
+  font-weight:900;
+  margin:0 0 18px;
+}
+
+.carousel-content p{
+  color:rgba(255,255,255,.82);
+  font-size:15px;
+  line-height:1.7;
+  margin:0 0 25px;
+}
+
+.carousel-content button{
+  border:0;
+  border-radius:6px;
+  padding:15px 21px;
+  background:var(--primary);
+  color:#fff;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.5px;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.carousel-content button:hover{
+  background:#a7192b;
+  transform:translateY(-2px);
+}
+
+.carousel-dots{
+  position:absolute;
+  z-index:3;
+  bottom:25px;
+  left:60px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.carousel-dots button{
+  width:9px;
+  height:9px;
+  padding:0;
+  border:0;
+  border-radius:20px;
+  background:rgba(255,255,255,.45);
+  cursor:pointer;
+  transition:.3s;
+}
+
+.carousel-dots button.active{
+  width:27px;
+  background:#e63b4b;
+}
+
+@media(max-width:700px){
+  .home-carousel{
+    margin:25px auto 35px;
+    border-radius:12px;
+  }
+
+  .carousel-track,
+  .carousel-slide{
+    min-height:420px;
+  }
+
+  .carousel-content{
+    padding:45px 25px 85px;
+  }
+
+  .carousel-content h2{
+    font-size:30px;
+  }
+
+  .carousel-content p{
+    font-size:13px;
+  }
+
+  .carousel-dots{
+    left:25px;
+    bottom:22px;
+  }
+}
+
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 5px 20px #183b2510;transition:.25s}.card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}.card-body{padding:20px}.card-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.tag{background:var(--soft);color:var(--primary);padding:6px 9px;border-radius:20px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.7px}.tag.gold{background:#fbf3df;color:#896515}.card h3{margin:12px 0 7px}.card p{font-size:12px;line-height:1.7;color:var(--muted);margin-bottom:15px}.card-link{font-size:11px;color:var(--primary);font-weight:800}.card-image{height:165px;background:#e6eee8;overflow:hidden}.card-image img{width:100%;height:100%;object-fit:cover;transition:.4s}.card:hover .card-image img{transform:scale(1.04)}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}.photo-panel{min-height:380px;border-radius:22px;background:linear-gradient(0deg,#241012aa,#24101200),url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfC76-dP6vse-6li3-WSU2kaA59X9WwCldT3cc4xkVssAfpGjg7BJjPic&s=10') center/cover;position:relative}.photo-stamp{position:absolute;right:-16px;bottom:24px;background:var(--accent);color:#1c241d;border-radius:15px;padding:16px 20px;font-family:'Barlow Condensed';font-size:22px;text-transform:uppercase;box-shadow:var(--shadow)}.story-copy p{color:var(--muted);font-size:13px;line-height:1.9}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.stat{border-left:2px solid var(--accent);padding-left:12px}.stat strong{display:block;font-family:'Barlow Condensed';font-size:28px;color:var(--primary)}.stat span{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px}
 .match-list{display:grid;gap:10px}.match{background:white;border:1px solid var(--line);border-radius:13px;padding:15px 18px;display:grid;grid-template-columns:90px 1fr 70px 1fr 90px;align-items:center;gap:12px}.match-date{font-size:10px;color:var(--muted);font-weight:700}.team{font-size:12px;font-weight:800}.team.right{text-align:right}.score{font-family:'Barlow Condensed';font-size:22px;text-align:center;color:var(--primary)}.match small{display:block;font-size:9px;color:var(--muted);margin-top:4px}.table-wrap{overflow:auto;background:white;border:1px solid var(--line);border-radius:15px}.standings{width:100%;border-collapse:collapse;min-width:560px}.standings th{text-align:left;background:#f1f5f2;color:#65736a;text-transform:uppercase;font-size:9px;letter-spacing:.8px;padding:14px}.standings td{padding:14px;border-top:1px solid var(--line);font-size:11px;font-weight:600}.standings td:first-child{color:var(--primary);font-weight:800}.standings tr:hover td{background:#fbfcfb}
@@ -306,11 +458,73 @@ footer{background:#241719;color:white;margin-top:65px;padding:45px 0 20px}.foote
   <div class="hero-actions"><button class="btn" onclick="showPage('competicoes')">Conheça as competições <i class="fa-solid fa-arrow-right"></i></button><button class="btn secondary" onclick="showPage('liga')">Conheça a Liga</button></div>
   <div class="hero-meta"><div><strong>Nossa história</strong><small>Tradição esportiva</small></div><div><strong>Conselheiro Lafaiete</strong><small>Minas Gerais</small></div><div><strong>Esporte para todos</strong><small>Nosso compromisso</small></div></div>
  </div></div>
- <div class="container"><div class="quick-grid">
-  <div class="quick-card"><div class="quick-icon"><i class="fa-solid fa-trophy"></i></div><div><strong>Competições oficiais</strong><span>Organização e valorização do esporte.</span></div></div>
-  <div class="quick-card"><div class="quick-icon"><i class="fa-solid fa-people-group"></i></div><div><strong>Clubes e atletas</strong><span>Fortalecendo quem faz o esporte acontecer.</span></div></div>
-  <div class="quick-card"><div class="quick-icon"><i class="fa-solid fa-bullhorn"></i></div><div><strong>Informação transparente</strong><span>Notícias, documentos e comunicados.</span></div></div>
- </div></div>
+<div class="container">
+  <div class="home-carousel" id="homeCarousel">
+
+    <div class="carousel-track">
+
+      <div class="carousel-slide active">
+        <img src="IMAGEM-COMPETICOES" alt="Competições">
+        <div class="carousel-content">
+          <span>COMPETIÇÕES</span>
+          <h2>A emoção do esporte começa aqui.</h2>
+          <p>Acompanhe os campeonatos, conheça as equipes e fique por dentro de cada competição.</p>
+          <button onclick="showPage('competicoes')">EXPLORAR COMPETIÇÕES →</button>
+        </div>
+      </div>
+
+      <div class="carousel-slide">
+        <img src="IMAGEM-RESULTADOS" alt="Resultados e tabelas">
+        <div class="carousel-content">
+          <span>RESULTADOS E TABELAS</span>
+          <h2>Cada rodada tem uma história.</h2>
+          <p>Confira os placares e acompanhe a classificação dos campeonatos.</p>
+          <button onclick="showPage('resultados')">VER RESULTADOS →</button>
+        </div>
+      </div>
+
+      <div class="carousel-slide">
+        <img src="IMAGEM-CLUBES" alt="Clubes filiados">
+        <div class="carousel-content">
+          <span>CLUBES FILIADOS</span>
+          <h2>Grandes clubes fazem o esporte acontecer.</h2>
+          <p>Conheça as instituições que movimentam o esporte da nossa cidade.</p>
+          <button onclick="showPage('clubes')">CONHECER CLUBES →</button>
+        </div>
+      </div>
+
+      <div class="carousel-slide">
+        <img src="IMAGEM-NOTICIAS" alt="Notícias">
+        <div class="carousel-content">
+          <span>NOTÍCIAS</span>
+          <h2>O esporte não para.</h2>
+          <p>Acompanhe as novidades e os principais acontecimentos esportivos da região.</p>
+          <button onclick="showPage('noticias')">LER NOTÍCIAS →</button>
+        </div>
+      </div>
+
+      <div class="carousel-slide">
+        <img src="IMAGEM-LIGA" alt="A Liga">
+        <div class="carousel-content">
+          <span>A LIGA</span>
+          <h2>Uma história construída por quem acredita no esporte.</h2>
+          <p>Conheça a trajetória e o trabalho da Liga de Desportos.</p>
+          <button onclick="showPage('liga')">CONHECER A LIGA →</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="carousel-dots">
+      <button class="active" onclick="goToCarouselSlide(0)"></button>
+      <button onclick="goToCarouselSlide(1)"></button>
+      <button onclick="goToCarouselSlide(2)"></button>
+      <button onclick="goToCarouselSlide(3)"></button>
+      <button onclick="goToCarouselSlide(4)"></button>
+    </div>
+
+  </div>
+</div>
  <div class="container section-pad"><div class="section-head"><div><div class="eyebrow">Calendário esportivo</div><h2>Competições em destaque</h2></div><button class="btn secondary" onclick="showPage('competicoes')">Todas as competições <i class="fa-solid fa-arrow-right"></i></button></div><div class="cards" id="homeCompetitions"></div></div>
  <div class="section-pad" style="background:#f1f3f2"><div class="container"><div class="section-head"><div><div class="eyebrow">Dentro de campo</div><h2>Últimos resultados</h2></div><button class="btn secondary" onclick="showPage('resultados')">Ver resultados</button></div><div class="match-list" id="homeMatches"></div></div></div>
  <div class="container section-pad"><div class="section-head"><div><div class="eyebrow">Fique por dentro</div><h2>Últimas notícias</h2></div><button class="btn secondary" onclick="showPage('noticias')">Todas as notícias</button></div><div class="cards" id="homeNews"></div></div>
@@ -1056,6 +1270,44 @@ if (heroTitle) {
     }, 500);
 
   }, 5000);
+}
+
+const carouselSlides = document.querySelectorAll('.carousel-slide');
+const carouselDots = document.querySelectorAll('.carousel-dots button');
+
+let carouselIndex = 0;
+let carouselTimer;
+
+function goToCarouselSlide(index) {
+  if (!carouselSlides.length) return;
+
+  carouselIndex = index;
+
+  carouselSlides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+
+  carouselDots.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+
+  clearInterval(carouselTimer);
+  startCarousel();
+}
+
+function startCarousel() {
+  if (carouselSlides.length <= 1) return;
+
+  clearInterval(carouselTimer);
+
+  carouselTimer = setInterval(() => {
+    const nextIndex = (carouselIndex + 1) % carouselSlides.length;
+    goToCarouselSlide(nextIndex);
+  }, 5000);
+}
+
+if (carouselSlides.length) {
+  startCarousel();
 }
 </script>
 </body>
